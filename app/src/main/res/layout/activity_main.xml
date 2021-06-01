@@ -18,7 +18,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:inputType="number|numberDecimal"
-        android:digits="0123456789." />
+        android:digits="0123456789."
+        android:backgroundTint="#0093FF"/>
 
     <EditText
         android:id="@+id/port"
@@ -31,25 +32,46 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:backgroundTint="#0093FF"/>
 
     <Button
         android:id="@+id/connect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="130dp"
+        android:layout_marginStart="130dp"
         android:text="Connect" />
 
-    <LinearLayout
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <SeekBar
+            android:id="@+id/seekBar1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:rotation="270" />
 
-    </LinearLayout>
+        <include layout="@layout/joystick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+
+        <SeekBar
+            android:id="@+id/seekBar2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            />
+
+
+    </RelativeLayout>
 
 
 </LinearLayout>
