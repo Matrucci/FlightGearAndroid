@@ -7,62 +7,74 @@
     android:paddingRight="16dp"
     android:background="@color/black">
 
-    <LinearLayout
+
+    <EditText
+        android:id="@+id/ip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/connectionLayout">
+        android:hint="IP"
+        android:textAlignment="center"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:inputType="number|numberDecimal"
+        android:digits="0123456789."
+        android:backgroundTint="#0093FF"/>
 
-        <EditText
-            android:id="@+id/ip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="IP"
-            android:textAlignment="center"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:inputType="number|numberDecimal"
-            android:digits="0123456789."
-            android:backgroundTint="#0093FF"/>
+    <EditText
+        android:id="@+id/port"
+        android:hint="Port"
+        android:textAlignment="center"
+        android:outlineAmbientShadowColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:inputType="number"
+        android:backgroundTint="#0093FF"
+        android:layout_below="@+id/ip" />
 
-        <EditText
-            android:id="@+id/port"
-            android:hint="Port"
-            android:textAlignment="center"
-            android:outlineAmbientShadowColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:inputType="number"
-            android:backgroundTint="#0093FF"/>
-
-        <Button
-            android:id="@+id/connect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Connect"
-            android:layout_marginStart="137dp" />
-
-
-    </LinearLayout>
-
-
-
-    <SeekBar
-        android:id="@+id/seekBar1"
+    <Button
+        android:id="@+id/connect"
         android:layout_width="wrap_content"
-        android:layout_height="450dp"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="37dp"
-        android:layout_marginBottom="45dp"
-        android:rotation="270" />
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Connect"
+        android:layout_below="@+id/port"/>
+
+    <RelativeLayout
+        android:id="@+id/controllers"
+        android:layout_below="@+id/connect"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.matt.flightgearcontrol.widget.VerticalSeekBar
+            android:id="@+id/throttle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="45dp"
+            android:layout_marginTop="15dp"
+            android:min="0"
+            android:max="100"/>
+
+        <SeekBar
+            android:id="@+id/rudder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:min="0"
+            android:max="100" />
+
+    </RelativeLayout>
+
+
+
 
 
 </RelativeLayout>
