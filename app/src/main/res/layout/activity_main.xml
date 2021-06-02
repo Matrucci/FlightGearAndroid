@@ -1,77 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:orientation="vertical"
     android:background="@color/black">
 
-    <EditText
-        android:id="@+id/ip"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="IP"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:inputType="number|numberDecimal"
-        android:digits="0123456789."
-        android:backgroundTint="#0093FF"/>
+        android:orientation="vertical"
+        android:id="@+id/connectionLayout">
 
-    <EditText
-        android:id="@+id/port"
-        android:hint="Port"
-        android:outlineAmbientShadowColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:inputType="number"
-        android:backgroundTint="#0093FF"/>
-
-    <Button
-        android:id="@+id/connect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="130dp"
-        android:text="Connect" />
-
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <SeekBar
-            android:id="@+id/seekBar1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:rotation="270" />
-
-        <include layout="@layout/joystick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"/>
-
-        <SeekBar
-            android:id="@+id/seekBar2"
+        <EditText
+            android:id="@+id/ip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="15dp"
-            />
+            android:hint="IP"
+            android:textAlignment="center"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:inputType="number|numberDecimal"
+            android:digits="0123456789."
+            android:backgroundTint="#0093FF"/>
+
+        <EditText
+            android:id="@+id/port"
+            android:hint="Port"
+            android:textAlignment="center"
+            android:outlineAmbientShadowColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:inputType="number"
+            android:backgroundTint="#0093FF"/>
+
+        <Button
+            android:id="@+id/connect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connect"
+            android:layout_marginStart="137dp" />
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
-</LinearLayout>
+
+    <SeekBar
+        android:id="@+id/seekBar1"
+        android:layout_width="wrap_content"
+        android:layout_height="450dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="37dp"
+        android:layout_marginBottom="45dp"
+        android:rotation="270" />
+
+
+</RelativeLayout>

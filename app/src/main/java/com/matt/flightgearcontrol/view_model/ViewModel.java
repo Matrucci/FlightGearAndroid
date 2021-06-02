@@ -35,6 +35,13 @@ public class ViewModel {
         this.port = port;
     }
 
+    public void connect() {
+        if (this.model == null) {
+            this.model = new FlightGearPlayer(this.ip, this.port);
+        }
+
+    }
+
 
 
 }
