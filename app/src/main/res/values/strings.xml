@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Take Flight!</string>
+    <string name="network_path_error">Wrong IP or port number</string>
 </resources>

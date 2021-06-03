@@ -4,15 +4,20 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.matt.flightgearcontrol.R;
+import com.matt.flightgearcontrol.model.FlightGearPlayer;
 import com.matt.flightgearcontrol.view_model.ViewModel;
+import com.matt.flightgearcontrol.widget.VerticalSeekBar;
 
 public class MainActivity extends AppCompatActivity {
     private ViewModel vm;
@@ -21,20 +26,79 @@ public class MainActivity extends AppCompatActivity {
     private EditText ip;
     private EditText port;
     private Button connect;
+    private VerticalSeekBar throttle;
+    private SeekBar rudder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         ActionBar actionBar = getSupportActionBar();
-        //assert actionBar != null;
-        actionBar.setTitle("Take Flight!");
+        actionBar.setTitle(R.string.app_name);
+
+        this.vm = new ViewModel();
 
         findViewsById();
+        setActionListeners();
+    }
+
+    private void setActionListeners() {
+
         this.connect.setOnClickListener(
                 v -> connectClicked()
         );
+
+        this.rudder.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        try {
+                            vm.setRudder(progress);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                }
+        );
+
+        this.throttle.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        try {
+                            vm.setThrottle(progress);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                }
+        );
+
     }
 
     private void connectClicked() {
@@ -50,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         } else { //wrong input
             RelativeLayout linearLayout = (RelativeLayout) findViewById(R.id.rel);
             Snackbar snackbar = Snackbar
-                    .make(linearLayout, "Wrong IP or port number", Snackbar.LENGTH_LONG);
+                    .make(linearLayout, R.string.network_path_error, Snackbar.LENGTH_LONG);
 
             snackbar.show();
         }
@@ -96,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
         this.ip = (EditText) findViewById(R.id.ip);
         this.port  = (EditText) findViewById(R.id.port);
         this.connect = (Button) findViewById(R.id.connect);
+        this.rudder = (SeekBar) findViewById(R.id.rudder);
+        this.throttle = (VerticalSeekBar) findViewById(R.id.throttle);
     }
 
 }
