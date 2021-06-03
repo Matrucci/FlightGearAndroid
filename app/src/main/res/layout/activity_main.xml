@@ -63,6 +63,24 @@
             android:min="0"
             android:max="100"/>
 
+        <FrameLayout
+            android:id="@+id/joystick_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_toEndOf="@+id/throttle"
+            android:layout_above="@+id/rudder"
+            android:layout_margin="15dp">
+
+            <com.matt.flightgearcontrol.views.Joystick
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+
+        </FrameLayout>
+
         <SeekBar
             android:id="@+id/rudder"
             android:layout_width="match_parent"
