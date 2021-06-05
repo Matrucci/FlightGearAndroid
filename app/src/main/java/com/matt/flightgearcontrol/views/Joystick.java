@@ -109,7 +109,7 @@ public class Joystick extends View {
                     //this.smallCircleX = (int)(this.bigCircleRadius * Math.cos(1  - angle));
                 } else if (angle < 270) {
                     //Log.i("value", "" + this.bigCircleRadius * Math.sin(Math.toRadians(angle - 180)));
-                    this.smallCircleY = (int)(this.bigCircleY - this.bigCircleRadius * Math.sin(Math.toRadians(angle - 180)));                    this.smallCircleY = (int)(this.bigCircleRadius * Math.sin(angle - 180));
+                    this.smallCircleY = (int)(this.bigCircleY - this.bigCircleRadius * Math.sin(Math.toRadians(angle - 180)));
                     this.smallCircleX = findX(this.smallCircleY, false);
                     //this.smallCircleX = (int)(this.bigCircleRadius * Math.cos(angle - 1));
                 } else {
