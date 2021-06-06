@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.matt.flightgearcontrol.Interfaces.Changeable;
 import com.matt.flightgearcontrol.R;
 
 public class Joystick extends View {
@@ -24,6 +25,7 @@ public class Joystick extends View {
     private int smallCircleX;
     private int smallCircleY;
     private double smallCircleRadius;
+    public Changeable onChange;
 
     public Joystick(Context context) {
         super(context);
@@ -92,23 +94,25 @@ public class Joystick extends View {
             if (x == this.bigCircleX) {
                 if (y > this.bigCircleY) {
                     this.smallCircleY = this.bigCircleY + (int)this.bigCircleRadius;
+                    this.smallCircleX = this.bigCircleX;
                 } else {
                     this.smallCircleY = this.bigCircleY - (int)this.bigCircleRadius;
+                    this.smallCircleX = this.bigCircleX;
                 }
             } else {
                 double angle = findAngle(x, y);
                 //Log.i("joystick", "" + angle);
-                if (angle < 90) {
+                if (angle <= 90) {
                     this.smallCircleY = (int)(this.bigCircleY + this.bigCircleRadius * Math.sin(Math.toRadians(angle)));
                     this.smallCircleX = findX(this.smallCircleY, true);
                     //this.smallCircleX = (int)(this.bigCircleRadius * Math.cos(angle));
-                } else if (angle < 180) {
+                } else if (angle <= 180) {
                     //Log.i("value", "" + this.bigCircleRadius * Math.sin(Math.toRadians(angle)));
                     this.smallCircleY = (int)(this.bigCircleY + this.bigCircleRadius * Math.sin(Math.toRadians(angle)));
                     this.smallCircleX = findX(this.smallCircleY, false);
                     //this.smallCircleX = (int)(this.bigCircleRadius * Math.cos(1  - angle));
-                } else if (angle < 270) {
-                    //Log.i("value", "" + this.bigCircleRadius * Math.sin(Math.toRadians(angle - 180)));
+                } else if (angle <= 270) {
+                    //Log.i("ANGLE", "FUCK");
                     this.smallCircleY = (int)(this.bigCircleY - this.bigCircleRadius * Math.sin(Math.toRadians(angle - 180)));
                     this.smallCircleX = findX(this.smallCircleY, false);
                     //this.smallCircleX = (int)(this.bigCircleRadius * Math.cos(angle - 1));
@@ -118,13 +122,24 @@ public class Joystick extends View {
                     //this.smallCircleX = (int)(this.bigCircleRadius * Math.cos(angle - 1.5));
                 }
             }
+        }
 
+        //Log.i("joystick", )
+        //TODO call onChange
+
+        try {
+            double a = (this.smallCircleX - this.bigCircleX) / (this.bigCircleRadius);
+            double e = (this.smallCircleY - this.bigCircleY) / (this.bigCircleRadius);
+            Log.i("A", "" + a);
+            //Log.i("E", "" + e);
+            onChange.onChange(a,e);
+        } catch (Exception e) {
 
         }
     }
 
     private int findX(int y, boolean isPositive) {
-        double x = Math.sqrt(Math.pow(this.bigCircleRadius, 2) - Math.pow(y - this.bigCircleY, 2));
+        double x = Math.sqrt(Math.abs(Math.pow(this.bigCircleRadius, 2) - Math.pow(y - this.bigCircleY, 2)));
         if (isPositive) {
             x = x + this.bigCircleX;
             return (int)x;

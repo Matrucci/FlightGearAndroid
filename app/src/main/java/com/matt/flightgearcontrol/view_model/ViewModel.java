@@ -71,6 +71,18 @@ public class ViewModel {
         }
     }
 
+    public void setAileron(double a) throws InterruptedException {
+        if (this.model != null) {
+            this.model.setAileron(a);
+        }
+    }
+
+    public void setElevator(double e) throws InterruptedException {
+        if (this.model != null) {
+            this.model.setAileron(e);
+        }
+    }
+
 
 
 }

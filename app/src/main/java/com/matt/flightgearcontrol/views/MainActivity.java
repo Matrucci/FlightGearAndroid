@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private Button connect;
     private VerticalSeekBar throttle;
     private SeekBar rudder;
+    private Joystick joystick;
 
 
     @Override
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         findViewsById();
         setActionListeners();
+
     }
 
     private void setActionListeners() {
@@ -108,6 +110,11 @@ public class MainActivity extends AppCompatActivity {
                 this.vm.setIp(this.ip.getText().toString());
                 this.vm.setPort(_port);
                 this.vm.connect();
+
+                this.joystick.onChange = (a, e) -> {
+                    this.vm.setAileron(a);
+                    this.vm.setElevator(e);
+                };
             } catch (Exception e) {
                 return;
             }
@@ -162,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
         this.connect = (Button) findViewById(R.id.connect);
         this.rudder = (SeekBar) findViewById(R.id.rudder);
         this.throttle = (VerticalSeekBar) findViewById(R.id.throttle);
+        this.joystick = (Joystick) findViewById(R.id.joystick);
     }
 
 }
