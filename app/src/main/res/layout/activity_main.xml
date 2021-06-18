@@ -51,7 +51,11 @@
         android:id="@+id/controllers"
         android:layout_below="@+id/connect"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+        <!--
+        android:visibility="invisible"
+        -->
 
         <com.matt.flightgearcontrol.widget.VerticalSeekBar
             android:id="@+id/throttle"

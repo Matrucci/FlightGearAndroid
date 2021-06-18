@@ -1,5 +1,6 @@
 package com.matt.flightgearcontrol.view_model;
 import android.util.Log;
+import android.view.View;
 
 import com.matt.flightgearcontrol.model.FlightGearPlayer;
 import com.matt.flightgearcontrol.views.MainActivity;
@@ -18,7 +19,15 @@ public class ViewModel {
     public ViewModel(String ip, int port) {
         this.ip = ip;
         this.port = port;
-        this.model = new FlightGearPlayer(ip, port);
+        this.model = new FlightGearPlayer(ip, port, this);
+    }
+
+    public void notifyConnected(boolean isConnected) {
+        this.view.updateConnection(isConnected);
+    }
+
+    public void setView(MainActivity view) {
+        this.view = view;
     }
 
     public String getIp() {
@@ -38,9 +47,7 @@ public class ViewModel {
     }
 
     public void connect() {
-        if (this.model == null) {
-            this.model = new FlightGearPlayer(this.ip, this.port);
-        }
+        this.model = new FlightGearPlayer(this.ip, this.port, this);
     }
 
     private double convertValuesRudder(int value) {
@@ -79,7 +86,7 @@ public class ViewModel {
 
     public void setElevator(double e) throws InterruptedException {
         if (this.model != null) {
-            this.model.setAileron(e);
+            this.model.setElevator(e);
         }
     }
 

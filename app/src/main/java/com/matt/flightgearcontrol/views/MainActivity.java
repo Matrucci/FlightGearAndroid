@@ -3,6 +3,7 @@ package com.matt.flightgearcontrol.views;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setTitle(R.string.app_name);
 
         this.vm = new ViewModel();
+        this.vm.setView(this);
 
         findViewsById();
         setActionListeners();
@@ -119,9 +121,9 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         } else { //wrong input
-            RelativeLayout linearLayout = (RelativeLayout) findViewById(R.id.rel);
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel);
             Snackbar snackbar = Snackbar
-                    .make(linearLayout, R.string.network_path_error, Snackbar.LENGTH_LONG);
+                    .make(relativeLayout, R.string.network_path_error, Snackbar.LENGTH_LONG);
 
             snackbar.show();
         }
@@ -170,6 +172,23 @@ public class MainActivity extends AppCompatActivity {
         this.rudder = (SeekBar) findViewById(R.id.rudder);
         this.throttle = (VerticalSeekBar) findViewById(R.id.throttle);
         this.joystick = (Joystick) findViewById(R.id.joystick);
+    }
+
+    public void updateConnection(boolean isConnected) {
+        if (isConnected) {
+            Log.i("Main", "connected");
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.controllers);
+            relativeLayout.setVisibility(View.VISIBLE);
+            this.connect.setText("Connected!");
+            this.connect.setBackgroundColor(Color.parseColor("#0aaaf5"));
+        } else {
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel);
+            Snackbar snackbar = Snackbar
+                    .make(relativeLayout, R.string.unable_to_connect, Snackbar.LENGTH_LONG);
+
+            snackbar.show();
+        }
+
     }
 
 }

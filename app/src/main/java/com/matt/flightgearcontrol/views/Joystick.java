@@ -8,23 +8,20 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 import com.matt.flightgearcontrol.Interfaces.Changeable;
-import com.matt.flightgearcontrol.R;
 
 public class Joystick extends View {
     private Paint paint;
-    private int bigCircleX;
-    private int bigCircleY;
-    private double bigCircleRadius;
-    private int smallCircleX;
-    private int smallCircleY;
-    private double smallCircleRadius;
+    private int boundCircleX;
+    private int boundCircleY;
+    private double boundCircleRadius;
+    private int joystickCircleX;
+    private int joystickCircleY;
+    private double joystickCircleRadius;
     public Changeable onChange;
 
     public Joystick(Context context) {
@@ -51,13 +48,14 @@ public class Joystick extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        this.smallCircleRadius = 0.175f * Math.min(w, h);
-        this.smallCircleX = w / 2;
-        this.smallCircleY = h / 2;
-        this.bigCircleRadius = 0.35 * Math.min(w, h);
-        this.bigCircleX = w / 2;
-        this.bigCircleY = h / 2;
-        //Log.i("circle", "x : " + this.bigCircleX + " y: " + this.bigCircleY + " radius: " + this.bigCircleRadius);
+        //this.joystickCircleRadius = 0.175f * Math.min(w, h);
+        this.joystickCircleRadius = 0.14f * Math.min(w, h);
+        this.joystickCircleX = w / 2;
+        this.joystickCircleY = h / 2;
+        //this.boundCircleRadius = 0.4 * Math.min(w, h);
+        this.boundCircleRadius = 0.42 * Math.min(w, h);
+        this.boundCircleX = w / 2;
+        this.boundCircleY = h / 2;
     }
 
 
@@ -76,8 +74,13 @@ public class Joystick extends View {
                 break;
 
             case MotionEvent.ACTION_UP:
-                this.smallCircleY = this.bigCircleY;
-                this.smallCircleX = this.bigCircleX;
+                this.joystickCircleY = this.boundCircleY;
+                this.joystickCircleX = this.boundCircleX;
+                try {
+                    onChange.onChange(0,0);
+                } catch (Exception e) {
+
+                }
                 this.invalidate();
                 break;
         }
@@ -86,51 +89,50 @@ public class Joystick extends View {
     }
 
     private void moveOnTouch(int x, int y) {
-        double dis = Math.sqrt(Math.pow(x - this.bigCircleX, 2) + Math.pow(y - this.bigCircleY, 2));
-        if (dis <= this.bigCircleRadius) {
-            this.smallCircleX = x;
-            this.smallCircleY = y;
+        double dis = Math.sqrt(Math.pow(x - this.boundCircleX, 2) + Math.pow(y - this.boundCircleY, 2));
+        if (dis <= this.boundCircleRadius) {
+            this.joystickCircleX = x;
+            this.joystickCircleY = y;
         } else {
-            if (x == this.bigCircleX) {
-                if (y > this.bigCircleY) {
-                    this.smallCircleY = this.bigCircleY + (int)this.bigCircleRadius;
-                    this.smallCircleX = this.bigCircleX;
+            if (x == this.boundCircleX) {
+                if (y > this.boundCircleY) {
+                    this.joystickCircleY = this.boundCircleY + (int)this.boundCircleRadius;
+                    this.joystickCircleX = this.boundCircleX;
                 } else {
-                    this.smallCircleY = this.bigCircleY - (int)this.bigCircleRadius;
-                    this.smallCircleX = this.bigCircleX;
+                    this.joystickCircleY = this.boundCircleY - (int)this.boundCircleRadius;
+                    this.joystickCircleX = this.boundCircleX;
                 }
             } else {
                 double angle = findAngle(x, y);
                 //Log.i("joystick", "" + angle);
                 if (angle <= 90) {
-                    this.smallCircleY = (int)(this.bigCircleY + this.bigCircleRadius * Math.sin(Math.toRadians(angle)));
-                    this.smallCircleX = findX(this.smallCircleY, true);
+                    this.joystickCircleY = (int)(this.boundCircleY + this.boundCircleRadius * Math.sin(Math.toRadians(angle)));
+                    this.joystickCircleX = findX(this.joystickCircleY, true);
                     //this.smallCircleX = (int)(this.bigCircleRadius * Math.cos(angle));
                 } else if (angle <= 180) {
                     //Log.i("value", "" + this.bigCircleRadius * Math.sin(Math.toRadians(angle)));
-                    this.smallCircleY = (int)(this.bigCircleY + this.bigCircleRadius * Math.sin(Math.toRadians(angle)));
-                    this.smallCircleX = findX(this.smallCircleY, false);
+                    this.joystickCircleY = (int)(this.boundCircleY + this.boundCircleRadius * Math.sin(Math.toRadians(angle)));
+                    this.joystickCircleX = findX(this.joystickCircleY, false);
                     //this.smallCircleX = (int)(this.bigCircleRadius * Math.cos(1  - angle));
                 } else if (angle <= 270) {
                     //Log.i("ANGLE", "FUCK");
-                    this.smallCircleY = (int)(this.bigCircleY - this.bigCircleRadius * Math.sin(Math.toRadians(angle - 180)));
-                    this.smallCircleX = findX(this.smallCircleY, false);
+                    this.joystickCircleY = (int)(this.boundCircleY - this.boundCircleRadius * Math.sin(Math.toRadians(angle - 180)));
+                    this.joystickCircleX = findX(this.joystickCircleY, false);
                     //this.smallCircleX = (int)(this.bigCircleRadius * Math.cos(angle - 1));
                 } else {
-                    this.smallCircleY = (int)(this.bigCircleY - this.bigCircleRadius * Math.sin(Math.toRadians(360 - angle)));
-                    this.smallCircleX = findX(this.smallCircleY, true);
+                    this.joystickCircleY = (int)(this.boundCircleY - this.boundCircleRadius * Math.sin(Math.toRadians(360 - angle)));
+                    this.joystickCircleX = findX(this.joystickCircleY, true);
                     //this.smallCircleX = (int)(this.bigCircleRadius * Math.cos(angle - 1.5));
                 }
             }
         }
 
-        //Log.i("joystick", )
-        //TODO call onChange
 
         try {
-            double a = (this.smallCircleX - this.bigCircleX) / (this.bigCircleRadius);
-            double e = (this.smallCircleY - this.bigCircleY) / (this.bigCircleRadius);
-            Log.i("A", "" + a);
+            double a = (this.joystickCircleX - this.boundCircleX) / (this.boundCircleRadius);
+            double e = (this.joystickCircleY - this.boundCircleY) / (this.boundCircleRadius);
+            e = -1 * e;
+            //Log.i("A", "" + a);
             //Log.i("E", "" + e);
             onChange.onChange(a,e);
         } catch (Exception e) {
@@ -139,25 +141,25 @@ public class Joystick extends View {
     }
 
     private int findX(int y, boolean isPositive) {
-        double x = Math.sqrt(Math.abs(Math.pow(this.bigCircleRadius, 2) - Math.pow(y - this.bigCircleY, 2)));
+        double x = Math.sqrt(Math.abs(Math.pow(this.boundCircleRadius, 2) - Math.pow(y - this.boundCircleY, 2)));
         if (isPositive) {
-            x = x + this.bigCircleX;
+            x = x + this.boundCircleX;
             return (int)x;
         }
-        x = this.bigCircleX - x;
+        x = this.boundCircleX - x;
         return (int)x;
     }
 
     private double findAngle(int x, int y) {
-        double incline = (double)(this.bigCircleY - y) / (double)(this.bigCircleX - x);
+        double incline = (double)(this.boundCircleY - y) / (double)(this.boundCircleX - x);
         double deg = Math.toDegrees(Math.atan(Math.abs(incline)));
-        if (x < this.bigCircleX && y > this.bigCircleY) {
+        if (x < this.boundCircleX && y > this.boundCircleY) {
             return 180 - deg;
         }
-        if (x < this.bigCircleX && y < this.bigCircleY) {
+        if (x < this.boundCircleX && y < this.boundCircleY) {
             return 180 + deg;
         }
-        if (x > this.bigCircleX && y < this.bigCircleY) {
+        if (x > this.boundCircleX && y < this.boundCircleY) {
             return 360 - deg;
         }
         return deg;
@@ -171,11 +173,24 @@ public class Joystick extends View {
         //int color = ContextCompat.getColor(context, R.color.colorPrimary);
         //paint.setColor(getResources().getColor(R.color.material_on_background_disabled));
         paint.setColor(Color.parseColor("#2a0575"));
-        canvas.drawCircle(this.bigCircleX, this.bigCircleY, (float)this.bigCircleRadius, paint);
+        canvas.drawCircle(this.boundCircleX, this.boundCircleY, (float)this.boundCircleRadius, paint);
 
         //paint.setColor(getResources().getColor(R.color.design_default_color_primary_dark));
         paint.setColor(Color.parseColor("#0aaaf5"));
-        canvas.drawCircle(this.smallCircleX, this.smallCircleY, (float)this.smallCircleRadius, paint);
+        canvas.drawCircle(this.joystickCircleX, this.joystickCircleY, (float)this.joystickCircleRadius, paint);
+
+        paint.setColor(Color.parseColor("#0aaaf5"));
+        paint.setStrokeWidth(5);
+        float partRad = (float)(7 * boundCircleRadius) / 8;
+        canvas.drawLine(this.boundCircleX, this.boundCircleY - partRad, this.boundCircleX - 70, this.boundCircleY - partRad + 70, paint);
+        canvas.drawLine(this.boundCircleX, this.boundCircleY - partRad, this.boundCircleX + 70, this.boundCircleY - partRad + 70, paint);
+        canvas.drawLine(this.boundCircleX, this.boundCircleY + partRad, this.boundCircleX - 70, this.boundCircleY + partRad - 70, paint);
+        canvas.drawLine(this.boundCircleX, this.boundCircleY + partRad, this.boundCircleX + 70, this.boundCircleY + partRad - 70, paint);
+
+        canvas.drawLine(this.boundCircleX + partRad, this.boundCircleY, this.boundCircleX - 70 + partRad, this.boundCircleY - 70, paint);
+        canvas.drawLine(this.boundCircleX + partRad, this.boundCircleY, this.boundCircleX - 70 + partRad, this.boundCircleY + 70, paint);
+        canvas.drawLine(this.boundCircleX - partRad, this.boundCircleY, this.boundCircleX + 70 - partRad, this.boundCircleY - 70, paint);
+        canvas.drawLine(this.boundCircleX - partRad, this.boundCircleY, this.boundCircleX + 70 - partRad, this.boundCircleY + 70, paint);
 
     }
 

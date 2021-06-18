@@ -1,38 +1,31 @@
 package com.matt.flightgearcontrol.model;
 
-import android.os.AsyncTask;
-import android.util.Log;
+import com.matt.flightgearcontrol.view_model.ViewModel;
 
-import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class FlightGearPlayer {
 
-
     private String ip;
     private int port;
-    /*
-    private double rudder;
-    private double throttle;
-    private double aileron;
-    private double elevator;
-
-     */
     private BlockingQueue<Runnable> dispatchQueue = new LinkedBlockingQueue<Runnable>();
     private PrintWriter out;
     private Socket fg;
 
 
-
-    public FlightGearPlayer(String ip, int port) {
+    public FlightGearPlayer(String ip, int port, ViewModel viewModel) {
         this.port = port;
         this.ip = ip;
         try {
-            this.fg = new Socket(ip, port);
+            //this.fg = new Socket(ip, port);
+            this.fg = new Socket();
+            this.fg.connect(new InetSocketAddress(ip, port), 2000);
             this.out = new PrintWriter(fg.getOutputStream(),true);
+            viewModel.notifyConnected(true);
             new Thread(new Runnable() {
                 //Socket fg = new Socket(ip, port);
                 //PrintWriter out = new PrintWriter(fg.getOutputStream(),true);
@@ -48,6 +41,7 @@ public class FlightGearPlayer {
                 }
             }).start();
         } catch (Exception e) {
+            viewModel.notifyConnected(false);
             e.printStackTrace();
         }
     }
