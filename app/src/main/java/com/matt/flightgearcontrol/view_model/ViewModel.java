@@ -30,16 +30,8 @@ public class ViewModel {
         this.view = view;
     }
 
-    public String getIp() {
-        return ip;
-    }
-
     public void setIp(String ip) {
         this.ip = ip;
-    }
-
-    public int getPort() {
-        return port;
     }
 
     public void setPort(int port) {
@@ -53,18 +45,17 @@ public class ViewModel {
     private double convertValuesRudder(int value) {
         int oldRange = 100;
         int newRange = 2;
-        return (double)((double)(value * newRange) / oldRange) - 1;
+        return ((double)(value * newRange) / oldRange) - 1;
     }
 
     private double convertValuesThrottle(int value) {
         int oldRange = 100;
         int newRange = 1;
-        return (double)((double)(value * newRange) / oldRange);
+        return ((double)(value * newRange) / oldRange);
     }
 
     public void setRudder(int rudder) throws InterruptedException {
         if (this.model != null) {
-            //Log.i("MAIN", "" + convertValuesRudder(rudder));
             this.model.setRudder(convertValuesRudder(rudder));
 
         }
@@ -72,8 +63,6 @@ public class ViewModel {
 
     public void setThrottle(int throttle) throws InterruptedException {
         if (this.model != null) {
-            //Log.i("MAIN", "" + convertValues(throttle));
-            //this.model.setThrottle(convertValues(throttle));
             this.model.setThrottle(convertValuesThrottle(throttle));
         }
     }
@@ -89,7 +78,5 @@ public class ViewModel {
             this.model.setElevator(e);
         }
     }
-
-
 
 }

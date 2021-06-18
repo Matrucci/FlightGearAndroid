@@ -21,21 +21,18 @@ public class FlightGearPlayer {
         this.port = port;
         this.ip = ip;
         try {
-            //this.fg = new Socket(ip, port);
             this.fg = new Socket();
             this.fg.connect(new InetSocketAddress(ip, port), 2000);
             this.out = new PrintWriter(fg.getOutputStream(),true);
             viewModel.notifyConnected(true);
             new Thread(new Runnable() {
-                //Socket fg = new Socket(ip, port);
-                //PrintWriter out = new PrintWriter(fg.getOutputStream(),true);
                 @Override
                 public void run() {
                     while (true) {
                         try {
                             dispatchQueue.take().run();
                         } catch (InterruptedException e) {
-                            // okay, just terminate the dispatcher
+                            //Nothing in queue.
                         }
                     }
                 }
