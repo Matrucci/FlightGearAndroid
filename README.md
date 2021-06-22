@@ -40,6 +40,7 @@ Download links:
 https://www.flightgear.org/download/ 
 
 - The app (.apk) or the project is also required. You can clone the repo or download the apk file here: [.apk file](https://drive.google.com/file/d/1bE9usfPDbVgVrrLeUSwbsul3olTQjjkB/view?usp=sharing)
+
 If you chose to clone the repo, you'll have to install Android Studio in order to run it properly. You can do that here: https://developer.android.com/studio
 
 ## Project structure
