@@ -24,7 +24,7 @@ public class FlightGearPlayer {
             this.fg = new Socket();
             this.fg.connect(new InetSocketAddress(ip, port), 2000);
             this.out = new PrintWriter(fg.getOutputStream(),true);
-            viewModel.notifyConnected(true);
+            viewModel.notifyConnected(true, 0);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -38,7 +38,7 @@ public class FlightGearPlayer {
                 }
             }).start();
         } catch (Exception e) {
-            viewModel.notifyConnected(false);
+            viewModel.notifyConnected(false, 1);
             e.printStackTrace();
         }
     }

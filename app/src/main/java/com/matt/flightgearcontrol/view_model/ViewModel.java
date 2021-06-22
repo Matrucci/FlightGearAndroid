@@ -22,8 +22,8 @@ public class ViewModel {
         this.model = new FlightGearPlayer(ip, port, this);
     }
 
-    public void notifyConnected(boolean isConnected) {
-        this.view.updateConnection(isConnected);
+    public void notifyConnected(boolean isConnected, int flag) {
+        this.view.updateConnection(isConnected, flag);
     }
 
     public void setView(MainActivity view) {
@@ -40,6 +40,11 @@ public class ViewModel {
 
     public void connect() {
         this.model = new FlightGearPlayer(this.ip, this.port, this);
+    }
+
+    public void disconnect() {
+        this.model = null;
+        this.view.updateConnection(false, 2);
     }
 
     private double convertValuesRudder(int value) {

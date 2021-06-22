@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private VerticalSeekBar throttle;
     private SeekBar rudder;
     private Joystick joystick;
+    private boolean isConnected;
 
 
     @Override
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         //Setting up the new title.
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.app_name);
+
+        this.isConnected = false;
 
         //Creating the ViewModel.
         this.vm = new ViewModel();
@@ -113,26 +116,30 @@ public class MainActivity extends AppCompatActivity {
      * Setting up the connection and telling the ViewModel to connect.
      *****************************************************************/
     private void connectClicked() {
-        if (isValidateInput()) {
-            try {
-                int _port = Integer.parseInt(this.port.getText().toString());
-                this.vm.setIp(this.ip.getText().toString());
-                this.vm.setPort(_port);
-                this.vm.connect();
+        if (this.isConnected) {
+            this.vm.disconnect();
+        } else {
+            if (isValidateInput()) {
+                try {
+                    int _port = Integer.parseInt(this.port.getText().toString());
+                    this.vm.setIp(this.ip.getText().toString());
+                    this.vm.setPort(_port);
+                    this.vm.connect();
 
-                this.joystick.onChange = (a, e) -> {
-                    this.vm.setAileron(a);
-                    this.vm.setElevator(e);
-                };
-            } catch (Exception e) {
-                return;
+                    this.joystick.onChange = (a, e) -> {
+                        this.vm.setAileron(a);
+                        this.vm.setElevator(e);
+                    };
+                } catch (Exception e) {
+                    return;
+                }
+            } else { //wrong input
+                RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel);
+                Snackbar snackbar = Snackbar
+                        .make(relativeLayout, R.string.network_path_error, Snackbar.LENGTH_LONG);
+
+                snackbar.show();
             }
-        } else { //wrong input
-            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rel);
-            Snackbar snackbar = Snackbar
-                    .make(relativeLayout, R.string.network_path_error, Snackbar.LENGTH_LONG);
-
-            snackbar.show();
         }
     }
 
@@ -198,22 +205,33 @@ public class MainActivity extends AppCompatActivity {
     /********************************************************************
      * Updating the view if the connection to the server was successful.
      * @param isConnected - boolean to say if we managed to connect.
-     *******************************************************************/
-    public void updateConnection(boolean isConnected) {
+     * @param flag - 1 if failed to connect, 2 if disconnected.
+     ********************************************************************/
+    public void updateConnection(boolean isConnected, int flag) {
         //We managed to connect.
         if (isConnected) {
             //Showing the flight controls.
             RelativeLayout relativeLayout = findViewById(R.id.controllers);
             relativeLayout.setVisibility(View.VISIBLE);
             //Updating the connect button.
-            this.connect.setText(R.string.connected);
+            this.connect.setText(R.string.disconnect);
             this.connect.setBackgroundColor(Color.parseColor("#0aaaf5"));
+            this.isConnected = true;
         } else { //We didn't manage to connect.
             //Showing a snackbar with an error.
-            RelativeLayout relativeLayout = findViewById(R.id.rel);
+            int snackbarMessage = R.string.unable_to_connect; //flag = 1
+            if (flag == 2) {
+                snackbarMessage = R.string.disconnect_success;
+            }
+            RelativeLayout relativeLayout = findViewById(R.id.controllers);
             Snackbar snackbar = Snackbar
-                    .make(relativeLayout, R.string.unable_to_connect, Snackbar.LENGTH_LONG);
+                    .make(relativeLayout, snackbarMessage, Snackbar.LENGTH_LONG);
             snackbar.show();
+
+            relativeLayout.setVisibility(View.INVISIBLE);
+            this.connect.setText(R.string.connect);
+            this.connect.setBackgroundColor(Color.parseColor("#FF6200EE"));
+            this.isConnected = false;
         }
 
     }

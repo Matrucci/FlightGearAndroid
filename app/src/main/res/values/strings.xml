@@ -3,4 +3,7 @@
     <string name="network_path_error">Wrong IP or port number</string>
     <string name="unable_to_connect">Unable to connect to server</string>
     <string name="connected">Connected!</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="disconnect_success">Successfully disconnected from server.</string>
 </resources>
