@@ -59,7 +59,7 @@ The ViewModel class communicates with the FlightGearPlayer class which is the mo
 
 To run the project, you can use one of 2 methods:
 
-### Method 1: The user friendly(er) way:
+### Method 1 - The user friendly(er) way:
 
  - First of all, you'll have to install FlightGear using the link provided above.
 
@@ -94,7 +94,7 @@ Now, after we dealt with the FlightGear side of things, let's install and run th
 - Go to FlightGear, click the "Cessna C172P" tab and click "Autostart"
 - Enjoy! You can now control the plane!
 
-### Method 2 (The developer way):
+### Method 2 - The developer way:
 
 As for the FlightGear setup, it is the exact same as method 1. 
 
