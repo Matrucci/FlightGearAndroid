@@ -39,7 +39,7 @@ Or, better yet, just follow the instructions below to install the app and contro
 Download links:
 https://www.flightgear.org/download/ 
 
-- The app (.apk) or the project is also required. You can clone the repo or download the apk file here: <>
+- The app (.apk) or the project is also required. You can clone the repo or download the apk file here: [.apk file](https://drive.google.com/file/d/1bE9usfPDbVgVrrLeUSwbsul3olTQjjkB/view?usp=sharing)
 If you chose to clone the repo, you'll have to install Android Studio in order to run it properly. You can do that here: https://developer.android.com/studio
 
 ## Project structure
@@ -84,7 +84,7 @@ To run the project, you can use one of 2 methods:
 
 Now, after we dealt with the FlightGear side of things, let's install and run the app!
 
-- Download the .apk file from the link given <>
+- Download the .apk file from the link given: [.apk file](https://drive.google.com/file/d/1bE9usfPDbVgVrrLeUSwbsul3olTQjjkB/view?usp=sharing)
 - Install the app on your Android phone (if you don't know how to do so, you can use this guide: https://www.howtogeek.com/313433/how-to-sideload-apps-on-android/ )
 - Open the app
 - Enter the IP you got from your machine a few steps back in the IP field
