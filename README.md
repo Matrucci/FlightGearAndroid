@@ -4,6 +4,9 @@
 - Idan Givati
 
 ## Project description
+
+[A short demonstration video](https://youtu.be/-ePsQatrIuY)
+
 This app is fairly simple.
 
 In this project, our goal was to create an app that lets you connect to FlightGear and control a flight simulation.
