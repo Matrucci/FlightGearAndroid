@@ -15,14 +15,17 @@ import com.matt.flightgearcontrol.Interfaces.Changeable;
 import com.matt.flightgearcontrol.R;
 
 public class Joystick extends View {
-    private Paint paint;
+    public Changeable onChange;
+
     private int boundCircleX;
     private int boundCircleY;
     private double boundCircleRadius;
+
     private int joystickCircleX;
     private int joystickCircleY;
     private double joystickCircleRadius;
-    public Changeable onChange;
+
+    private Paint paint;
 
     public Joystick(Context context) {
         super(context);
