@@ -29,7 +29,7 @@ You can click the "DISCONNECT" button to disconnect from the current sever and c
 
 ![Disconnect](https://i.imgur.com/1cDL2pi.png)
 
-If you wish to see more of this project in action, you can view the short demonstration video we've created!
+If you wish to see more of this project in action, you can view the short [demonstration video](https://youtu.be/-ePsQatrIuY) we've created!
 
 Or, better yet, just follow the instructions below to install the app and control the flight on your own!
 
